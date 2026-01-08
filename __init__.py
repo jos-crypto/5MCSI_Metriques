@@ -19,8 +19,8 @@ def meteo():
         results.append({'Jour': dt_value, 'temp': temp_day_value})
     return jsonify(results=results) # extraire uniquement les dates et température du jour
 
-@app.route("/rapport/")
-def mongraphique():
+@app.route("/histogramme/")
+def monhistogramme():
     return render_template("histogramme.html") # histogramme
 
   
