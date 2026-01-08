@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Commits GitHub</title>
+
+    <!-- Librairie Google Charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
@@ -12,28 +14,37 @@
 <div id="chart_div" style="width: 800px; height: 400px; margin: auto;"></div>
 
 <script>
+    // Chargement de Google Charts
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
+        // Appel de l'API Flask
         fetch('/api/commits/')
             .then(response => response.json())
             .then(data => {
 
+                // Création du tableau de données
                 var dataTable = new google.visualization.DataTable();
                 dataTable.addColumn('number', 'Minute');
                 dataTable.addColumn('number', 'Commits');
 
+                // Remplissage du tableau
                 data.results.forEach(entry => {
-                   dataTable.addRow([entry.minute, entry.count]);
+                    dataTable.addRow([entry.minute, entry.count]);
                 });
 
+                // Options du graphique
                 var options = {
-                    title: 'Activité GitHub (commits par minute)',
+                    title: 'Activité GitHub – Commits par minute',
                     legend: { position: 'none' }
                 };
 
-                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                // Création de l'histogramme
+                var chart = new google.visualization.ColumnChart(
+                    document.getElementById('chart_div')
+                );
+
                 chart.draw(dataTable, options);
             });
     }
@@ -41,5 +52,3 @@
 
 </body>
 </html>
-
-   
