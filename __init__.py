@@ -19,6 +19,29 @@ def meteo():
         results.append({'Jour': dt_value, 'temp': temp_day_value})
     return jsonify(results=results) # extraire uniquement les dates et température du jour
 
+@app.route("/api/commits/")
+def commits_api():
+    url = "https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits"
+    response = urlopen(url)
+    raw_data = response.read()
+    commits = json.loads(raw_data.decode("utf-8"))
+
+    minutes_count = {}
+
+    for commit in commits:
+        date_str = commit.get("commit", {}).get("author", {}).get("date")
+        if date_str:
+            date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
+            minute = date_obj.minute
+            minutes_count[minute] = minutes_count.get(minute, 0) + 1
+
+    results = []
+    for minute, count in minutes_count.items():
+        results.append({"minute": minute, "count": count})
+
+    return jsonify(results=results)
+
+
 @app.route("/histogramme/")
 def monhistogramme():
     return render_template("histogramme.html") # histogramme
