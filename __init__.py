@@ -36,11 +36,8 @@ def commits_api():
             minutes_count[minute] = minutes_count.get(minute, 0) + 1
 
     results = []
-    for minute in sorted(minutes_count):
-    results.append({
-        "minute": minute,
-        "count": minutes_count[minute]
-    })
+    for minute, count in minutes_count.items():
+    results.append({"minute": minute, "count": count})
 
 @app.route("/histogramme/")
 def monhistogramme():
