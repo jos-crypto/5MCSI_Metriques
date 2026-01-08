@@ -29,8 +29,8 @@ def mongraphique():
     return render_template("graphique.html") # route pour graphique html
   
 @app.route("/contact/")
-def MaPremiereAPI():
-    return "<h2>Ma page de contact</h2>" # nouvelle route
+def contact():
+    return render_template("contact.html")
   
 @app.route('/')
 def hello_world():
