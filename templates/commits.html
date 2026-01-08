@@ -21,11 +21,11 @@
             .then(data => {
 
                 var dataTable = new google.visualization.DataTable();
-                dataTable.addColumn('string', 'Minute');
+                dataTable.addColumn('number', 'Minute');
                 dataTable.addColumn('number', 'Commits');
 
                 data.results.forEach(entry => {
-                   dataTable.addRow([entry.minute.toString(), entry.count]);
+                   dataTable.addRow([entry.minute, entry.count]);
                 });
 
                 var options = {
