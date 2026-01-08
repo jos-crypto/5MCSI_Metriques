@@ -37,7 +37,9 @@ def commits_api():
 
     results = []
     for minute, count in minutes_count.items():
-    results.append({"minute": minute, "count": count})
+        results.append({"minute": minute, "count": count})
+
+    return jsonify(results=results)
 
 @app.route("/histogramme/")
 def monhistogramme():
