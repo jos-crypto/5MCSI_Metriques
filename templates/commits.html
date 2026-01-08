@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Commits GitHub</title>
+
+    <!-- Librairie Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+
+<h2 style="text-align:center;">Nombre de commits par minute</h2>
+
+<div id="chart_div" style="width: 800px; height: 400px; margin: auto;"></div>
+
+<script>
+    // Chargement de Google Charts
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        // Appel de l'API Flask
+        fetch('/api/commits/')
+            .then(response => response.json())
+            .then(data => {
+
+                // Création du tableau de données
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('number', 'Minute');
+                dataTable.addColumn('number', 'Commits');
+
+                // Remplissage du tableau
+                data.results.forEach(entry => {
